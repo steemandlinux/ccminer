@@ -125,9 +125,6 @@ nvcc_FLAGS += $(JANSSON_INCLUDES) --use_fast_math --ptxas-options="-v"
 .cu.o:
 	$(NVCC) $(nvcc_FLAGS) --maxrregcount=96 -o $@ -c $<
 	
-qubit/qubit_luffa512.o: qubit/qubit_luffa512.cu
-	$(NVCC) $(nvcc_FLAGS) -gencode=arch=compute_52,code=\"sm_52,compute_52\" -o $@ -c $<
-
 Algo256/blake256.o: Algo256/blake256.cu
 	$(NVCC) $(nvcc_FLAGS) --maxrregcount=64 -o $@ -c $<
 
@@ -143,15 +140,15 @@ crypto/cryptonight-extra.o: crypto/cryptonight-extra.cu
 heavy/cuda_hefty1.o: heavy/cuda_hefty1.cu
 	$(NVCC) $(nvcc_FLAGS) --maxrregcount=80 -o $@ -c $<
 
-qubit/qubit_luffa512.o: qubit/qubit_luffa512.cu
-	$(NVCC) $(nvcc_FLAGS) --maxrregcount=80 -o $@ -c $<
-
 # Luffa and Echo are faster with 80 registers than 128
 x11/cuda_x11_luffa512.o: x11/cuda_x11_luffa512.cu
-	$(NVCC) $(nvcc_FLAGS) --maxrregcount=80 -o $@ -c $<
+	$(NVCC) $(nvcc_FLAGS) --maxrregcount=80 -gencode=arch=compute_52,code=\"sm_52,compute_52\" -o $@ -c $<
 
 x11/cuda_x11_luffa512_Cubehash.o: x11/cuda_x11_luffa512_Cubehash.cu
-	$(NVCC) $(nvcc_FLAGS) --maxrregcount=76 -o $@ -c $<
+	$(NVCC) $(nvcc_FLAGS) --maxrregcount=76 -gencode=arch=compute_52,code=\"sm_52,compute_52\" -o $@ -c $<
+	
+qubit/qubit_luffa512.o: qubit/qubit_luffa512.cu
+	$(NVCC) $(nvcc_FLAGS) --maxrregcount=80 -gencode=arch=compute_52,code=\"sm_52,compute_52\" -o $@ -c $<
 
 x11/cuda_x11_simd512.o: x11/cuda_x11_simd512.cu
 	$(NVCC) $(nvcc_FLAGS) -Xcompiler -Wno-unused-variable -o $@ -c $<
