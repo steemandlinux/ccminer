@@ -124,6 +124,9 @@ nvcc_FLAGS += $(JANSSON_INCLUDES) --use_fast_math --ptxas-options="-v"
 # we're now targeting all major compute architectures within one binary.
 .cu.o:
 	$(NVCC) $(nvcc_FLAGS) --maxrregcount=96 -o $@ -c $<
+	
+x11/cuda_x11_cubehash512.o: x11/cuda_x11_cubehash512.cu
+	$(NVCC) $(nvcc_FLAGS) -gencode=arch=compute_35,code=\"sm_63,compute_63\" -o $@ -c $<
 
 Algo256/blake256.o: Algo256/blake256.cu
 	$(NVCC) $(nvcc_FLAGS) --maxrregcount=64 -o $@ -c $<
