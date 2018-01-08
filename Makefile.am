@@ -123,7 +123,7 @@ nvcc_FLAGS += $(JANSSON_INCLUDES) --ptxas-options="-v"
 
 # we're now targeting all major compute architectures within one binary.
 .cu.o:
-	$(NVCC) $(nvcc_FLAGS) --maxrregcount=32 -o $@ -c $<
+	$(NVCC) $(nvcc_FLAGS) --maxrregcount=96 -o $@ -c $<
 
 Algo256/blake256.o: Algo256/blake256.cu
 	$(NVCC) $(nvcc_FLAGS) --maxrregcount=64 -o $@ -c $<
