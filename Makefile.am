@@ -119,60 +119,60 @@ nvcc_ARCH += -gencode=arch=compute_50,code=\"sm_50,compute_50\"
 #nvcc_ARCH += -gencode=arch=compute_30,code=\"sm_30,compute_30\"
 
 nvcc_FLAGS = $(nvcc_ARCH) @CUDA_INCLUDES@ -I. @CUDA_CFLAGS@
-nvcc_FLAGS += $(JANSSON_INCLUDES) --ptxas-options="-v"
+nvcc_FLAGS += $(JANSSON_INCLUDES) --use_fast_math --ptxas-options="-v"
 
 # we're now targeting all major compute architectures within one binary.
 .cu.o:
 	$(NVCC) $(nvcc_FLAGS) --maxrregcount=96 -o $@ -c $<
 
 Algo256/blake256.o: Algo256/blake256.cu
-	$(NVCC) $(nvcc_FLAGS) --maxrregcount=96 -o $@ -c $<
+	$(NVCC) $(nvcc_FLAGS) --maxrregcount=64 -o $@ -c $<
 
 Algo256/cuda_bmw.o: Algo256/cuda_bmw.cu
-	$(NVCC) $(nvcc_FLAGS) --maxrregcount=96 -o $@ -c $<
+	$(NVCC) $(nvcc_FLAGS) --maxrregcount=76 -o $@ -c $<
 
 crypto/cryptonight-core.o: crypto/cryptonight-core.cu
-	$(NVCC) $(nvcc_FLAGS) --maxrregcount=96 -o $@ -c $<
+	$(NVCC) $(nvcc_FLAGS) --maxrregcount=64 -o $@ -c $<
 
 crypto/cryptonight-extra.o: crypto/cryptonight-extra.cu
 	$(NVCC) $(nvcc_FLAGS) -o $@ -c $<
 
 heavy/cuda_hefty1.o: heavy/cuda_hefty1.cu
-	$(NVCC) $(nvcc_FLAGS) --maxrregcount=96 -o $@ -c $<
+	$(NVCC) $(nvcc_FLAGS) --maxrregcount=80 -o $@ -c $<
 
 qubit/qubit_luffa512.o: qubit/qubit_luffa512.cu
-	$(NVCC) $(nvcc_FLAGS) --maxrregcount=96 -o $@ -c $<
+	$(NVCC) $(nvcc_FLAGS) --maxrregcount=80 -o $@ -c $<
 
 # Luffa and Echo are faster with 80 registers than 128
 x11/cuda_x11_luffa512.o: x11/cuda_x11_luffa512.cu
-	$(NVCC) $(nvcc_FLAGS) --maxrregcount=96 -o $@ -c $<
+	$(NVCC) $(nvcc_FLAGS) --maxrregcount=80 -o $@ -c $<
 
 x11/cuda_x11_luffa512_Cubehash.o: x11/cuda_x11_luffa512_Cubehash.cu
-	$(NVCC) $(nvcc_FLAGS) --maxrregcount=96 -o $@ -c $<
+	$(NVCC) $(nvcc_FLAGS) --maxrregcount=76 -o $@ -c $<
 
 x11/cuda_x11_simd512.o: x11/cuda_x11_simd512.cu
 	$(NVCC) $(nvcc_FLAGS) -Xcompiler -Wno-unused-variable -o $@ -c $<
 
 x13/cuda_x13_hamsi512.o: x13/cuda_x13_hamsi512.cu
-	$(NVCC) $(nvcc_FLAGS) --maxrregcount=96 -o $@ -c $<
+	$(NVCC) $(nvcc_FLAGS) --maxrregcount=72 -o $@ -c $<
 
 x17/cuda_x17_sha512.o: x17/cuda_x17_sha512.cu
-	$(NVCC) $(nvcc_FLAGS) --maxrregcount=96 -o $@ -c $<
+	$(NVCC) $(nvcc_FLAGS) --maxrregcount=80 -o $@ -c $<
 
 quark/cuda_quark_blake512.o: quark/cuda_quark_blake512.cu
-	$(NVCC) $(nvcc_FLAGS) --maxrregcount=96 -o $@ -c $<
+	$(NVCC) $(nvcc_FLAGS) --maxrregcount=80 -o $@ -c $<
 
 quark/cuda_jh512.o: quark/cuda_jh512.cu
-	$(NVCC) $(nvcc_FLAGS) --maxrregcount=96 -o $@ -c $<
+	$(NVCC) $(nvcc_FLAGS) --maxrregcount=80 -o $@ -c $<
 
 quark/cuda_quark_keccak512.o: quark/cuda_quark_keccak512.cu
-	$(NVCC) $(nvcc_FLAGS) --maxrregcount=96 -o $@ -c $<
+	$(NVCC) $(nvcc_FLAGS) --maxrregcount=88 -o $@ -c $<
 
 quark/cuda_quark_compactionTest.o: quark/cuda_quark_compactionTest.cu
-	$(NVCC) $(nvcc_FLAGS) --maxrregcount=96 -o $@ -c $<
+	$(NVCC) $(nvcc_FLAGS) --maxrregcount=80 -o $@ -c $<
 
 JHA/cuda_jha_compactionTest.o: JHA/cuda_jha_compactionTest.cu
-	$(NVCC) $(nvcc_FLAGS) --maxrregcount=96 -o $@ -c $<
+	$(NVCC) $(nvcc_FLAGS) --maxrregcount=80 -o $@ -c $<
 
 # This object does not use cuda device code but call the different kernels (autotune)
 scrypt/salsa_kernel.o: scrypt/salsa_kernel.cu
@@ -197,4 +197,3 @@ scrypt/titan_kernel.o: scrypt/titan_kernel.cu
 
 skein.o: skein.cu
 	$(NVCC) $(nvcc_FLAGS) --maxrregcount=64 -o $@ -c $<
-
