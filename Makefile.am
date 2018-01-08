@@ -112,9 +112,9 @@ endif
 ccminer_LDADD += -lcuda
 
 nvcc_ARCH :=
-#nvcc_ARCH += -gencode=arch=compute_62,code=\"sm_62,compute_62\"
-nvcc_ARCH += -gencode=arch=compute_52,code=\"sm_52,compute_52\"
-nvcc_ARCH += -gencode=arch=compute_50,code=\"sm_50,compute_50\"
+nvcc_ARCH += -gencode=arch=compute_62,code=\"sm_62,compute_62\"
+#nvcc_ARCH += -gencode=arch=compute_52,code=\"sm_52,compute_52\"
+#nvcc_ARCH += -gencode=arch=compute_50,code=\"sm_50,compute_50\"
 #nvcc_ARCH += -gencode=arch=compute_35,code=\"sm_35,compute_35\"
 #nvcc_ARCH += -gencode=arch=compute_30,code=\"sm_30,compute_30\"
 
@@ -125,8 +125,8 @@ nvcc_FLAGS += $(JANSSON_INCLUDES) --use_fast_math --ptxas-options="-v"
 .cu.o:
 	$(NVCC) $(nvcc_FLAGS) --maxrregcount=96 -o $@ -c $<
 	
-x11/cuda_x11_cubehash512.o: x11/cuda_x11_cubehash512.cu
-	$(NVCC) $(nvcc_FLAGS) -gencode=arch=compute_62,code=\"sm_62,compute_62\" -o $@ -c $<
+qubit/qubit_luffa512.o: xqubit/qubit_luffa512.cu
+	$(NVCC) $(nvcc_FLAGS) -gencode=arch=compute_52,code=\"sm_52,compute_52\" -o $@ -c $<
 
 Algo256/blake256.o: Algo256/blake256.cu
 	$(NVCC) $(nvcc_FLAGS) --maxrregcount=64 -o $@ -c $<
