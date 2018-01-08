@@ -125,7 +125,7 @@ nvcc_FLAGS += $(JANSSON_INCLUDES) --use_fast_math --ptxas-options="-v"
 .cu.o:
 	$(NVCC) $(nvcc_FLAGS) --maxrregcount=96 -o $@ -c $<
 	
-qubit/qubit_luffa512.o: xqubit/qubit_luffa512.cu
+qubit/qubit_luffa512.o: qubit/qubit_luffa512.cu
 	$(NVCC) $(nvcc_FLAGS) -gencode=arch=compute_52,code=\"sm_52,compute_52\" -o $@ -c $<
 
 Algo256/blake256.o: Algo256/blake256.cu
