@@ -150,10 +150,7 @@ x11/cuda_x11_luffa512_Cubehash.o: x11/cuda_x11_luffa512_Cubehash.cu
 qubit/qubit_luffa512.o: qubit/qubit_luffa512.cu
 	$(NVCC) $(nvcc_FLAGS) --maxrregcount=80 -gencode=arch=compute_52,code=\"sm_52,compute_52\" -o $@ -c $<
 
-x11/cuda_x11_echo.o: x11/cuda_x11_echo.cu
-	$(NVCC) $(nvcc_FLAGS) -gencode=arch=compute_52,code=\"sm_52,compute_52\" -o $@ -c $<
-	
-x11/cuda_x11_shavite512.o: x11/cuda_x11_shavite512.cu
+qubit/luffa.o: qubit/luffa.cu
 	$(NVCC) $(nvcc_FLAGS) -gencode=arch=compute_52,code=\"sm_52,compute_52\" -o $@ -c $<
 
 x11/cuda_x11_simd512.o: x11/cuda_x11_simd512.cu
