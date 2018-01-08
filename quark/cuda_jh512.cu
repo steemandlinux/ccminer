@@ -478,7 +478,7 @@ void jh512_gpu_hash_80(const uint32_t threads, const uint32_t startNounce, uint3
 __host__
 void jh512_cuda_hash_80(const int thr_id, const uint32_t threads, const uint32_t startNounce, uint32_t *d_hash)
 {
-	const uint32_t threadsperblock = 1024;
+	const uint32_t threadsperblock = 16;
 	dim3 grid((threads + threadsperblock - 1) / threadsperblock);
 	dim3 block(threadsperblock);
 
