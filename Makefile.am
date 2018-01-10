@@ -112,9 +112,9 @@ endif
 ccminer_LDADD += -lcuda
 
 nvcc_ARCH :=
-nvcc_ARCH += -gencode=arch=compute_61,code=\"sm_61,compute_61\"
-#nvcc_ARCH += -gencode=arch=compute_52,code=\"sm_52,compute_52\"
-#nvcc_ARCH += -gencode=arch=compute_50,code=\"sm_50,compute_50\"
+#nvcc_ARCH += -gencode=arch=compute_61,code=\"sm_61,compute_61\"
+nvcc_ARCH += -gencode=arch=compute_52,code=\"sm_52,compute_52\"
+nvcc_ARCH += -gencode=arch=compute_50,code=\"sm_50,compute_50\"
 #nvcc_ARCH += -gencode=arch=compute_35,code=\"sm_35,compute_35\"
 #nvcc_ARCH += -gencode=arch=compute_30,code=\"sm_30,compute_30\"
 
@@ -142,13 +142,13 @@ heavy/cuda_hefty1.o: heavy/cuda_hefty1.cu
 
 # Luffa and Echo are faster with 80 registers than 128
 x11/cuda_x11_luffa512.o: x11/cuda_x11_luffa512.cu
-	$(NVCC) $(nvcc_FLAGS) --maxrregcount=80 -gencode=arch=compute_61,code=\"sm_61,compute_61\" -o $@ -c $<
+	$(NVCC) $(nvcc_FLAGS) --maxrregcount=80 -o $@ -c $<
 
 x11/cuda_x11_luffa512_Cubehash.o: x11/cuda_x11_luffa512_Cubehash.cu
-	$(NVCC) $(nvcc_FLAGS) --maxrregcount=76 -gencode=arch=compute_61,code=\"sm_61,compute_61\" -o $@ -c $<
+	$(NVCC) $(nvcc_FLAGS) --maxrregcount=76 -o $@ -c $<
 	
 qubit/qubit_luffa512.o: qubit/qubit_luffa512.cu
-	$(NVCC) $(nvcc_FLAGS) --maxrregcount=80 -gencode=arch=compute_61,code=\"sm_61,compute_61\" -o $@ -c $<
+	$(NVCC) $(nvcc_FLAGS) --maxrregcount=80 -o $@ -c $<
 
 x11/cuda_x11_simd512.o: x11/cuda_x11_simd512.cu
 	$(NVCC) $(nvcc_FLAGS) -Xcompiler -Wno-unused-variable -o $@ -c $<
